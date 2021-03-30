@@ -34,8 +34,10 @@ class Produto(models.Model):
 class Cliente(models.Model):
     nome = models.CharField(max_length=255, blank=False, null=False)
     cpf = models.CharField(max_length=11, blank=False, null=False)
+    email_cliente = models.EmailField(blank=True, null=True, verbose_name='E-mail')
 
     def __str__(self):
         return self.nome
+
 
 
