@@ -19,5 +19,5 @@ from vendas import urls as urls_vendas
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('venda/', include(urls_vendas)),
+    path('vendas/', include(urls_vendas)),
 ]
