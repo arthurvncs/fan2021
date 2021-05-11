@@ -1,19 +1,19 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, View
 from .models import Venda, Produto
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from .forms import VendaForm, VendaObservacaoForm, VendaClienteForm
 # Create your views here.
 
+
 class VendaCreateView(CreateView):
-    model = Venda
+    form_class = VendaForm
     template_name = 'cadastrar/venda.html'
 
-    fields = '__all__'
-
-
     def get_success_url(self):
-        messages.success (self.request, 'Venda cadastrada com sucesso!')
+        messages.success(self.request, 'Venda cadastrada com suceso!')
         return reverse_lazy("listar_venda")
 
 
@@ -36,13 +36,39 @@ class VendaListView(ListView):
     paginate_by = 3
 
 
-class VendaUpdateView(UpdateView):
+class VendaCorrecaoUpdateView(UpdateView):
     model = Venda
+    form_class = VendaForm
     template_name = 'atualizar/venda.html'
-
-    fields = '__all__'
 
     def get_success_url(self):
         messages.success(self.request, 'Venda atualizada com sucesso!')
         return reverse_lazy('listar_venda')
 
+class VendaAtualizarObservacaoView(UpdateView):
+    model = Venda
+    form_class = VendaObservacaoForm
+    template_name = 'atualizar/venda_observacao.html'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Observação da venda atualizada com sucesso!')
+        return reverse_lazy('listar_venda')
+
+class VendaAtualizarClienteView(UpdateView):
+    model = Venda
+    form_class = VendaClienteForm
+    template_name = 'atualizar/venda_cliente.html'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Cliente da venda atualizada com sucesso!')
+        return reverse_lazy('listar_venda')
+
+
+class VendaView(View):
+    def desabilitarVenda(self, pk: int):
+        Venda.objects.filter(id=pk).update(excluido=True)
+        return HttpResponseRedirect(reverse_lazy('listar_venda'))
+
+    def habilitarVenda(self, pk: int):
+        Venda.objects.filter(id=pk).update(excluido=False)
+        return HttpResponseRedirect(reverse_lazy('listar_venda'))

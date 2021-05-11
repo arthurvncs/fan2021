@@ -14,10 +14,12 @@ class Venda(models.Model):
     observacao = models.TextField(blank=True, null=True, verbose_name="Observação")
     comprovante_venda = models.FileField(upload_to='comprovante_venda/', verbose_name='Comprovante de Venda')
     exemplo_upload = models.FileField(upload_to='outro_diretorio/', null=True, blank=True)
-    venda_concluida = models.BooleanField(blank=False, null=False)
+    venda_concluida = models.BooleanField(blank=False, null=False, default=True)
     qtd_itens = models.IntegerField(blank=True, null=False, default=0, verbose_name='Quantidade de Itens Vendidos')
     produtos = models.ManyToManyField('Produto')
     cliente = models.ForeignKey('Cliente', on_delete=models.DO_NOTHING, default=1, verbose_name='Cliente')
+    novo_item = models.IntegerField(blank=False, null=False, default=True)
+    excluido = models.BooleanField(blank=True, null=False, default=False)
 
     def __str__(self):
         return str(self.pk) + ' - ' + self.nome
