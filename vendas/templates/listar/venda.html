@@ -22,6 +22,7 @@
                 <td>{{obj_venda.cliente}}</td>
                 <td>
                     <a href="{% url 'corrigir_venda' obj_venda.pk %}">CORRIGIR VENDA</a>
+                     <a href="{% url 'detalhes_venda' obj_venda.pk %}">VER DETALHES | </a>
                     <a href="{% url 'atualizar_observacao_venda' obj_venda.pk %}">| ATUALIZAR OBSERVAÇÃO DA VENDA |</a>
                     <a href="{% url 'atualizar_cliente_venda' obj_venda.pk %}">ATUALIZAR CLIENTE DA VENDA | </a>
                     {% if obj_venda.excluido is False %}

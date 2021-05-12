@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, UpdateView, View
+from django.views.generic import CreateView, ListView, UpdateView, View, DetailView
 from .models import Venda, Produto
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -72,3 +72,8 @@ class VendaView(View):
     def habilitarVenda(self, pk: int):
         Venda.objects.filter(id=pk).update(excluido=False)
         return HttpResponseRedirect(reverse_lazy('listar_venda'))
+
+
+class VendaDetailView(DetailView):
+    model = Venda
+    template_name = 'detalhes/venda.html'
